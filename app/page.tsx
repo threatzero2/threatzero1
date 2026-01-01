@@ -1,128 +1,147 @@
-export default function Home() {
+/* AI-LAYOUT: HOME v4 */
+
+import ScanBox from "@/components/ScanBox";
+import PricingCards from "@/components/PricingCards";
+import PeaceOfMind from "@/components/PeaceOfMind";
+import ScanCTA from "@/components/ScanCTA";
+
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white text-slate-900">
-      <header className="border-b">
-        <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-          <div className="font-semibold text-xl tracking-tight">ThreatZero</div>
-          <nav className="flex gap-5 text-sm">
-            <a className="hover:underline" href="#home">Home</a>
-            <a className="hover:underline" href="#services">Services</a>
-            <a className="hover:underline" href="#pricing">Plans</a>
-            <a className="hover:underline" href="#contact">Contact</a>
-          </nav>
-        </div>
-      </header>
+    <>
+      {/* ================= SOFT LAUNCH BANNER ================= */}
+      <div className="softBanner">
+        🚧 Soft launch: demo-omgeving — scanfunctionaliteit volgt binnenkort.
+      </div>
 
-      <section id="home" className="mx-auto max-w-6xl px-4 py-14">
-        <h1 className="text-4xl font-semibold leading-tight">
-          Find potential risks and exposures <span className="underline">before attackers do</span>.
-        </h1>
-        <p className="mt-4 max-w-2xl text-slate-600">
-          ThreatZero is an automated security scanning platform for websites and internet-facing assets.
-          Fast signals, clear reports, and a simple way to track your exposure over time.
-        </p>
+      {/* ================= HERO ================= */}
+      <section className="hero">
+        <div className="container">
+          <div className="heroGrid">
+            {/* Left */}
+            <div>
+              <p className="eyebrow">SNELLE SECURITY CHECK</p>
 
-        <div className="mt-10 rounded-2xl border p-6 shadow-sm max-w-3xl">
-          <div className="text-sm font-medium text-slate-700">
-            100% Free Web Scan with Instant Results
+              <h1 className="heroTitle">
+                Krijg inzicht in risico&apos;s <br />
+                <span className="heroTitleEm">binnen 30 seconden</span>
+              </h1>
+
+              {/* Scan */}
+              <div className="heroScan">
+                <ScanBox />
+                <p className="finePrint">
+                  Door te scannen ga je akkoord met onze voorwaarden.
+                </p>
+              </div>
+            </div>
+
+            {/* Right visual (placeholder / demo) */}
+            <div className="heroVisual">
+              <div className="visualCard">
+                <div className="visualTop">
+                  <span className="dot" />
+                  <span className="dot" />
+                  <span className="dot" />
+                  <span className="visualTitle">
+                    Security overview (voorbeeld)
+                  </span>
+                </div>
+
+                <div className="visualBody">
+                  <div className="miniGrid">
+                    <div className="miniTile">
+                      <p className="miniLabel">Kritiek</p>
+                      <p className="miniValue">3</p>
+                    </div>
+                    <div className="miniTile">
+                      <p className="miniLabel">Waarschuwingen</p>
+                      <p className="miniValue">7</p>
+                    </div>
+                    <div className="miniTile">
+                      <p className="miniLabel">Risicoscore</p>
+                      <p className="miniValue">62</p>
+                    </div>
+                  </div>
+
+                  <div className="visualHint">
+                    Duidelijke uitleg + concrete vervolgstappen
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-            <input
-              className="w-full rounded-xl border px-4 py-3 text-slate-900"
-              placeholder="https://example.com"
-            />
-            <button className="rounded-xl border px-5 py-3 font-medium hover:bg-slate-50">
-              Scan
-            </button>
-          </div>
-
-          <p className="mt-3 text-xs text-slate-500">
-            By conducting scans you agree to our <span className="underline">Terms</span>.
-          </p>
-        </div>
-      </section>
-
-      <section id="services" className="mx-auto max-w-6xl px-4 py-10 border-t">
-        <h2 className="text-2xl font-semibold">Ongoing Monitoring and Reports</h2>
-        <p className="mt-3 text-slate-600 max-w-2xl">
-          Get monthly scans, alerts on critical findings, and clear reporting you can act on.
-        </p>
-
-        <ul className="mt-5 grid gap-4 sm:grid-cols-3">
-          <li className="rounded-2xl border p-5">
-            <div className="font-medium">Monitoring</div>
-            <div className="mt-2 text-sm text-slate-600">
-              Scheduled recurring scans of your assets.
-            </div>
-          </li>
-          <li className="rounded-2xl border p-5">
-            <div className="font-medium">Reports</div>
-            <div className="mt-2 text-sm text-slate-600">
-              Prioritized findings with remediation steps.
-            </div>
-          </li>
-          <li className="rounded-2xl border p-5">
-            <div className="font-medium">Visibility</div>
-            <div className="mt-2 text-sm text-slate-600">
-              Track changes and reduce attack surface.
-            </div>
-          </li>
-        </ul>
-      </section>
-
-      <section id="pricing" className="mx-auto max-w-6xl px-4 py-10 border-t">
-        <h2 className="text-2xl font-semibold">Plans</h2>
-
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          <div className="rounded-2xl border p-6">
-            <div className="font-medium">Starter</div>
-            <div className="mt-2 text-slate-600 text-sm">1 website • monthly scan</div>
-            <div className="mt-4 text-2xl font-semibold">
-              €49 <span className="text-sm font-normal text-slate-500">/mo</span>
-            </div>
-            <button className="mt-5 w-full rounded-xl border px-4 py-3 hover:bg-slate-50">
-              Select plan
-            </button>
-          </div>
-
-          <div className="rounded-2xl border p-6">
-            <div className="font-medium">Business</div>
-            <div className="mt-2 text-slate-600 text-sm">1 website + 1 IP • monthly scan</div>
-            <div className="mt-4 text-2xl font-semibold">
-              €149 <span className="text-sm font-normal text-slate-500">/mo</span>
-            </div>
-            <button className="mt-5 w-full rounded-xl border px-4 py-3 hover:bg-slate-50">
-              Select plan
-            </button>
-          </div>
-
-          <div className="rounded-2xl border p-6">
-            <div className="font-medium">Pro</div>
-            <div className="mt-2 text-slate-600 text-sm">More assets • alerts • support</div>
-            <div className="mt-4 text-2xl font-semibold">
-              €299 <span className="text-sm font-normal text-slate-500">/mo</span>
-            </div>
-            <button className="mt-5 w-full rounded-xl border px-4 py-3 hover:bg-slate-50">
-              Select plan
-            </button>
+          {/* doelgroep */}
+          <div className="logoBarTitle">GESCHIKT VOOR O.A.</div>
+          <div className="logoBar">
+            <div className="logoPill">SaaS</div>
+            <div className="logoPill">E-commerce</div>
+            <div className="logoPill">Finance</div>
+            <div className="logoPill">MKB</div>
           </div>
         </div>
       </section>
 
-      <section id="contact" className="mx-auto max-w-6xl px-4 py-10 border-t">
-        <h2 className="text-2xl font-semibold">Contact</h2>
-        <p className="mt-3 text-slate-600">
-          Pre-launch: contact coming soon.
-        </p>
+      {/* ================= WAAROM WIJ ================= */}
+      <section className="section">
+        <div className="container">
+          <div className="featureGrid">
+            <div className="featureCards">
+              <div className="stackCard">
+                <p className="stackKicker">Detectie</p>
+                <h3 className="stackTitle">Weet wat er mis is</h3>
+                <p className="stackText">
+                  Wij laten zien waar risico&apos;s zitten en waarom ze relevant zijn.
+                </p>
+              </div>
+
+              <div className="stackCard">
+                <p className="stackKicker">Prioriteit</p>
+                <h3 className="stackTitle">Focus op wat telt</h3>
+                <p className="stackText">
+                  Geen ruis. Je ziet direct wat eerst moet worden aangepakt.
+                </p>
+              </div>
+
+              <div className="stackCard">
+                <p className="stackKicker">Actie</p>
+                <h3 className="stackTitle">Concrete vervolgstappen</h3>
+                <p className="stackText">
+                  Heldere aanbevelingen die je team meteen kan uitvoeren.
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <p className="eyebrow">WAAROM WIJ</p>
+              <h2 className="h2">
+                Security zonder onnodige <br /> complexiteit
+              </h2>
+              <p className="lead">
+                Geen technisch geneuzel, maar duidelijke inzichten voor beslissers
+                én engineers.
+              </p>
+
+              <a
+                href="/services"
+                className="btn primary"
+                style={{ marginTop: 18 }}
+              >
+                Bekijk onze services
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <footer className="border-t">
-        <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-600 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>Netherlands-based • Automated security scanning</div>
-          <div>© {new Date().getFullYear()} ThreatZero</div>
-        </div>
-      </footer>
-    </main>
+      {/* ================= PRICING ================= */}
+      <PricingCards />
+
+      {/* ================= PEACE OF MIND ================= */}
+      <PeaceOfMind />
+
+      {/* ================= SCAN CTA ================= */}
+      <ScanCTA />
+    </>
   );
 }
