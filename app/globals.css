@@ -2151,3 +2151,38 @@ main, .section, .pricingSection, .companyV2, .contactHero, .servicesListSection,
 
   text-decoration: none !important;
 }
+/* ===== Services picker spacing fix ===== */
+
+.servicesPickerList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.serviceCheck {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.2;
+}
+
+.serviceCheck input[type="checkbox"] {
+  margin-top: 3px;
+}
+
+.serviceCheckText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* ruimte tussen label en hint */
+}
+
+.serviceCheckLabel {
+  font-weight: 600;
+}
+
+.serviceCheckHint {
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+/* ===== end spacing fix ===== */
