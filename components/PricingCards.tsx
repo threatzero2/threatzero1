@@ -1,56 +1,86 @@
+import Link from "next/link";
+
+type PlanBase = {
+  name: string;
+  featured: boolean;
+  items: string[];
+};
+
+type PricedPlan = PlanBase & {
+  old: string;
+  price: string;
+  suffix: string;
+  ctaText: string;
+};
+
+type RequestPlan = PlanBase & {
+  label: string;
+  ctaText: string;
+  ctaHref: string;
+};
+
+type Plan = PricedPlan | RequestPlan;
+
 export default function PricingCards() {
-  const plans = [
+  const plans: Plan[] = [
     {
       name: "PERSOONLIJK",
       old: "€49,00",
       price: "€19,00",
       suffix: "/maand",
       featured: false,
+      ctaText: "Start nu",
       items: [
-        "Geautomatiseerde gegevensverwijdering",
-        "Monitoring van je digitale voetafdruk",
-        "AI-gestuurde automatisering",
-        "Dark web-monitoring",
-        "9.000+ beveiligingstests",
+        "Analyse van jouw digitale footprint op het internet",
+        "Controle op datalekken van e-mailadressen en accounts",
+        "Inzicht in openbaar beschikbare persoonlijke informatie",
+        "Signalering van verhoogd risico op identiteitsmisbruik",
+        "Verzoeken tot verwijdering van aangetroffen persoonsgegevens",
+        "Monitoring op herpublicatie na data removal",
       ],
     },
     {
-      name: "KLEIN BEDRIJF",
+      name: "MKB",
       old: "€99,00",
       price: "€49,00",
       suffix: "/maand",
       featured: true,
+      ctaText: "Start nu",
       items: [
-        "24/7 websitebeveiliging",
-        "Monitoring van medewerkers & directie",
-        "AI-gestuurde automatisering",
-        "140 miljard+ records gemonitord",
-        "22.000+ beveiligingstests",
-        "Professionele ondersteuning",
+        "AI-gestuurde geautomatiseerde security tests",
+        "Doorlopende kwetsbaarheidsscans van systemen en applicaties",
+        "Detectie van veelvoorkomende misconfiguraties en zwakke plekken",
+        "Simulatie van realistische aanvalstechnieken (automated)",
+        "Overzichtelijk dashboard met bevindingen en risiconiveaus",
+        "Periodieke her-tests na wijzigingen of updates",
       ],
     },
     {
-      name: "PENTESTER ELITE",
-      old: "€1.499,00",
-      price: "€899,00",
-      suffix: "/maand",
+      name: "Enterprise",
       featured: false,
+      label: "Op aanvraag",
+      ctaText: "Neem contact op",
+      ctaHref: "/services#services-form",
       items: [
-        "AI + Red Team-experts",
-        "Geavanceerde automatisering",
-        "140 miljard+ records gemonitord",
-        "39.000+ beveiligingstests",
-        "Dedicated accountmanager",
-        "Jaarlijkse handmatige pentest",
+        "Volledige pentest afgestemd op scope en risico’s",
+        "Uitgevoerd door ervaren red team specialisten",
+        "Handmatige aanvalssimulaties (realistische scenario’s)",
+        "Uitgebreide rapportage met bevindingen en risico’s",
+        "Concreet advies en prioriteiten voor mitigatie",
+        "Nabespreking en toelichting van het rapport",
       ],
     },
   ];
+
+  const isPriced = (p: Plan): p is PricedPlan => "price" in p;
 
   return (
     <section className="pricingSection">
       <div className="pricingContainer">
         <div className="pricingWrap">
-          <p className="pricingEyebrow">GRATIS TE PROBEREN, EENVOUDIG IN GEBRUIK, ZONDER RISICO</p>
+          <p className="pricingEyebrow">
+            GRATIS TE PROBEREN, EENVOUDIG IN GEBRUIK, ZONDER RISICO
+          </p>
           <h2 className="pricingTitle">Prijzen afgestemd op jouw behoeften</h2>
 
           <div className="pricingGrid pricingGrid--large">
@@ -61,24 +91,45 @@ export default function PricingCards() {
               >
                 <div className="pricingHead">
                   <div className="pricingName">{p.name}</div>
-                  <div className="pricingOld">{p.old}</div>
 
-                  <div className="pricingRow">
-                    <div className="pricingPrice">{p.price}</div>
-                    <div className="pricingSuffix">{p.suffix}</div>
+                  <div className="pricingOld">
+                    {isPriced(p) ? p.old : ""}
                   </div>
 
-                  <button
-                    className={`pricingBtn ${p.featured ? "primary" : ""}`}
-                    type="button"
-                  >
-                    Start nu
-                  </button>
+                  <div className="pricingRow">
+                    {isPriced(p) ? (
+                      <>
+                        <div className="pricingPrice">{p.price}</div>
+                        <div className="pricingSuffix">{p.suffix}</div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="pricingPrice">{p.label}</div>
+                        <div className="pricingSuffix" />
+                      </>
+                    )}
+                  </div>
+
+                  {"ctaHref" in p ? (
+                    <Link
+                      href={p.ctaHref}
+                      className={`pricingBtn ${p.featured ? "primary" : ""}`}
+                    >
+                      {p.ctaText}
+                    </Link>
+                  ) : (
+                    <button
+                      className={`pricingBtn ${p.featured ? "primary" : ""}`}
+                      type="button"
+                    >
+                      {p.ctaText}
+                    </button>
+                  )}
                 </div>
 
                 <ul className="pricingList">
-                  {p.items.map((it) => (
-                    <li key={it}>{it}</li>
+                  {p.items.map((item) => (
+                    <li key={item}>{item}</li>
                   ))}
                 </ul>
               </div>
