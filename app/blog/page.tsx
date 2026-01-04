@@ -34,7 +34,7 @@ export default function BlogPage() {
             className="lead"
             style={{ textAlign: "center", margin: "10px auto 0", maxWidth: "70ch" }}
           >
-            Nieuws, uitleg en praktische tips rondom cybersecurity — in heldere taal.
+            Nieuws, uitleg en praktische tips rondom cybersecurity.
           </p>
         </div>
       </section>
@@ -86,7 +86,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <ScanCTA title="100% gratis check (demo)" subtitle="Onder elke pagina dezelfde scan-sectie." />
+      <ScanCTA title="Gratis web check met snelle resultaten" subtitle="" />
     </>
   );
 }

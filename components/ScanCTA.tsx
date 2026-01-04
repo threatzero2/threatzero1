@@ -6,8 +6,8 @@ type Props = {
 };
 
 export default function ScanCTA({
-  title = "Gratis web check met snelle resultaten",
-  subtitle = "Alleen de opmaak — functionaliteit komt later.",
+  title = "Gratis web check met snelle resultaten.",
+  subtitle = "",
 }: Props) {
   return (
     <section className="scanCtaWrap">

@@ -3,50 +3,38 @@
 import { useMemo, useState } from "react";
 
 type ServiceKey =
-  | "pentest"
   | "risk"
-  | "redteam"
-  | "osint"
-  | "dataremoval"
-  | "monitoring"
+  | "pentest"
+  | "ai"
   | "cloudflare"
+  | "osint"
   | "other";
 
 const ALL_SERVICES: { key: ServiceKey; label: string; hint?: string }[] = [
   {
-    key: "pentest",
-    label: "Pentest (web / API)",
-    hint: "Kwetsbaarheden & misconfiguraties.",
-  },
-  {
     key: "risk",
-    label: "Risico-assessment",
-    hint: "Risico’s + prioriteiten.",
+    label: "Risicoanalyse",
+    hint: "",
   },
   {
-    key: "redteam",
-    label: "Red teaming",
-    hint: "Realistische aanvalssimulatie.",
+    key: "pentest",
+    label: "Pentesten",
+    hint: "",
   },
   {
-    key: "osint",
-    label: "OSINT & footprint",
-    hint: "Exposure & datalek-signalen.",
-  },
-  {
-    key: "dataremoval",
-    label: "Data removal",
-    hint: "Verwijderverzoeken (waar mogelijk).",
-  },
-  {
-    key: "monitoring",
-    label: "Monitoring",
-    hint: "Doorlopend inzicht.",
+    key: "ai",
+    label: "AI & Automatisering",
+    hint: "",
   },
   {
     key: "cloudflare",
-    label: "Cloudflare",
-    hint: "WAF / DNS / hardening.",
+    label: "Cloudflare Security",
+    hint: "",
+  },
+  {
+    key: "osint",
+    label: "OSINT-onderzoek",
+    hint: "",
   },
   {
     key: "other",
@@ -54,16 +42,13 @@ const ALL_SERVICES: { key: ServiceKey; label: string; hint?: string }[] = [
   },
 ];
 
-
 export default function ServicesForm() {
   const [selected, setSelected] = useState<Record<ServiceKey, boolean>>({
-    pentest: true,
     risk: false,
-    redteam: false,
-    osint: false,
-    dataremoval: false,
-    monitoring: false,
+    pentest: false,
+    ai: false,
     cloudflare: false,
+    osint: false,
     other: false,
   });
 
@@ -109,10 +94,12 @@ export default function ServicesForm() {
     e.preventDefault();
     setError(null);
 
-    // Basic required checks (professioneel en logisch)
     if (!form.voornaam.trim()) return setError("Vul je voornaam in.");
     if (!form.achternaam.trim()) return setError("Vul je achternaam in.");
     if (!form.email.trim()) return setError("Vul je e-mailadres in.");
+
+    // Minstens 1 dienst kiezen
+    if (selectedCount === 0) return setError("Kies minimaal één dienst.");
 
     // Overig: toelichting verplicht
     if (hasOther && !form.overigToelichting.trim()) {
@@ -121,7 +108,6 @@ export default function ServicesForm() {
 
     setSubmitting(true);
 
-    // Payload (later te sturen naar backend/CRM)
     const payload = {
       ...form,
       diensten: Object.entries(selected)
@@ -129,7 +115,6 @@ export default function ServicesForm() {
         .map(([k]) => k),
     };
 
-    // Demo submit (werkt nu al, later vervangen door fetch naar /api/...)
     await new Promise((r) => setTimeout(r, 900));
     console.log("Diensten aanvraag:", payload);
 
@@ -139,7 +124,7 @@ export default function ServicesForm() {
 
   if (success) {
     return (
-      <section className="section formSection">
+      <section className="section formSection formSectionSpaced">
         <div className="container">
           <p className="eyebrow">AANVRAAG</p>
           <h2 className="h2">We hebben je aanvraag ontvangen</h2>
@@ -152,7 +137,7 @@ export default function ServicesForm() {
   }
 
   return (
-    <section className="section formSection">
+    <section className="section formSection formSectionSpaced">
       <div className="container">
         <p className="eyebrow">DIENSTEN</p>
         <h2 className="h2">Vraag een security-intake aan</h2>
@@ -220,7 +205,7 @@ export default function ServicesForm() {
                   rows={5}
                   value={form.bericht}
                   onChange={(e) => onChange("bericht", e.target.value)}
-                  placeholder="Beschrijf kort je situatie. Bijvoorbeeld: pentest van website/API, scope, planning of specifieke zorgen."
+                  placeholder="Beschrijf kort je situatie. Bijvoorbeeld: scope, planning, systemen, of specifieke zorgen."
                 />
               </label>
 
@@ -240,11 +225,10 @@ export default function ServicesForm() {
                         checked={!!selected[s.key]}
                         onChange={() => toggleService(s.key)}
                       />
-                     <span className="serviceCheckText">
-  <span className="serviceCheckLabel">{s.label}</span>
-  {s.hint ? <span className="serviceCheckHint">{s.hint}</span> : null}
-</span>
-
+                      <span className="serviceCheckText">
+                        <span className="serviceCheckLabel">{s.label}</span>
+                        {s.hint ? <span className="serviceCheckHint">{s.hint}</span> : null}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -263,10 +247,7 @@ export default function ServicesForm() {
             </div>
 
             {error && (
-              <p
-                className="finePrint"
-                style={{ marginTop: 12, opacity: 1 }}
-              >
+              <p className="finePrint" style={{ marginTop: 12, opacity: 1 }}>
                 ⚠️ {error}
               </p>
             )}

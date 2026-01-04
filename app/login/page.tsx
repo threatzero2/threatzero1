@@ -1,47 +1,83 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+
 export default function LoginPage() {
+  const slides = useMemo(
+    () => [
+      {
+        icon: "🛡️",
+        title: "Onze focus: security & betrouwbaarheid",
+        text:
+          "ThreatZero helpt organisaties risico’s vroeg te signaleren: zwakke configuraties, blootgestelde data en kwetsbaarheden. Zo weet je sneller wat aandacht nodig heeft.",
+      },
+      {
+        icon: "🔎",
+        title: "Sneller inzicht",
+        text:
+          "Je krijgt overzicht en duidelijke prioriteiten, zodat je direct weet waar je moet beginnen — zonder technische ruis.",
+      },
+      {
+        icon: "⚡",
+        title: "Pentesten met impact",
+        text:
+          "We testen zoals een aanvaller en vertalen bevindingen naar concrete verbeterpunten die je team direct kan oppakken.",
+      },
+    ],
+    []
+  );
+
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActive((p) => (p + 1) % slides.length);
+    }, 4500); // om de paar sec
+    return () => clearInterval(id);
+  }, [slides.length]);
+
   return (
     <section className="loginWrap">
       <div className="container">
         <div className="loginGrid">
-          {/* LINKS: info card */}
+          {/* LINKS: slider card */}
           <div className="loginLeft">
-            <div className="loginInfoCard">
+            <div className="loginInfoCard loginSliderCard">
               <div className="loginInfoIcon" aria-hidden="true">
-                🛡️
+                {slides[active].icon}
               </div>
 
-              <h3 className="loginInfoTitle">
-                Onze focus: security & betrouwbaarheid
-              </h3>
+              <h3 className="loginInfoTitle">{slides[active].title}</h3>
 
-              <p className="loginInfoText">
-                ThreatZero is een cybersecurityplatform dat helpt bij het vroegtijdig
-                signaleren van blootgestelde data, zwakke configuraties en risico’s.
-                Dit is momenteel alleen de opmaak — later koppel je hier echte scans
-                en accounts aan.
-              </p>
+              <p className="loginInfoText">{slides[active].text}</p>
 
-              <div className="loginDots" aria-hidden="true">
-                <span className="dotActive" />
-                <span />
-                <span />
+              {/* dots */}
+              <div className="loginDots" aria-label="slides">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={`loginDot ${i === active ? "isActive" : ""}`}
+                    aria-label={`Slide ${i + 1}`}
+                    onClick={() => setActive(i)}
+                  />
+                ))}
               </div>
             </div>
           </div>
 
           {/* RECHTS: login panel */}
           <div className="loginRight">
-            <div className="loginPanel">
-              <div className="loginBrandBadge" aria-hidden="true">
-                TZ
-              </div>
-
+            <div className="loginPanel loginPanelLarge">
               <h1 className="loginTitle">Inloggen</h1>
+
+              {/* Start een scan verwijderd */}
               <p className="loginSub">
                 Nog geen account?{" "}
-                <a className="loginLink" href="/">
-                  Start een scan
-                </a>
+                <Link className="loginLink" href="/register">
+                  Maak er één aan
+                </Link>
               </p>
 
               <button className="googleBtn" type="button">
@@ -58,20 +94,27 @@ export default function LoginPage() {
               <form className="loginForm">
                 <label className="field">
                   <span>E-mailadres</span>
-                  <input type="email" placeholder="jij@bedrijf.nl" />
+                  <input
+                    type="email"
+                    placeholder="naam@bedrijf.nl"
+                    autoComplete="email"
+                  />
                 </label>
 
                 <label className="field">
                   <span>Wachtwoord</span>
                   <div className="pwRow">
-                    <input type="password" placeholder="••••••••" />
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      autoComplete="current-password"
+                    />
                     <button
                       className="pwIcon"
                       type="button"
                       aria-label="Wachtwoord tonen"
                       title="Wachtwoord tonen"
                     >
-                      {/* eye icon */}
                       <svg
                         width="18"
                         height="18"
@@ -103,7 +146,11 @@ export default function LoginPage() {
               </p>
 
               <p className="finePrint" style={{ marginTop: 14 }}>
-                Door in te loggen ga je akkoord met onze voorwaarden.
+                Door in te loggen ga je akkoord met onze{" "}
+                <Link href="/algemene-voorwaarden" className="termsLinkDark">
+                  voorwaarden
+                </Link>
+                .
               </p>
             </div>
           </div>

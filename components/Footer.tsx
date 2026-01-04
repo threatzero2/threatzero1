@@ -10,14 +10,16 @@ export default function Footer() {
             <h3 className="footerLogo">ThreatZero</h3>
 
             <p className="footerText">
-              Wij helpen je snel blootgestelde gegevens, zwakke configuraties en
-              andere signalen te herkennen die het cyberrisico verhogen — zodat
-              je problemen kunt oplossen voordat ze incidenten worden.
+              Wij helpen organisaties risico’s tijdig herkennen en grip houden op hun security.
+              Met helder inzicht en slimme automatisering voorkom je problemen voordat ze ontstaan.
             </p>
 
             <p className="footerSmall">
               Door scans uit te voeren ga je akkoord met onze{" "}
-              <span className="footerMutedLink">Algemene voorwaarden</span>
+              <Link href="/algemene-voorwaarden" className="termsLinkDark">
+                algemene voorwaarden
+              </Link>
+              .
             </p>
 
             <p className="footerSmall footerCopy">
@@ -25,38 +27,34 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Useful links */}
+          {/* Handige links */}
           <div className="footerCol">
             <h4 className="footerColTitle">Handige links</h4>
             <nav className="footerLinks">
               <Link href="/">Home</Link>
               <Link href="/company">Bedrijf</Link>
               <Link href="/services">Diensten</Link>
-              <Link href="/blog">Blog</Link>
               <Link href="/contact">Contact</Link>
-              <span className="disabled">Verwijder mijn website</span>
             </nav>
           </div>
 
-          {/* Terms */}
+          {/* Voorwaarden */}
           <div className="footerCol">
             <h4 className="footerColTitle">Voorwaarden</h4>
             <div className="footerLinks">
-              <span className="disabled">Privacybeleid</span>
-              <span className="disabled">Algemene voorwaarden</span>
+              <Link href="/privacybeleid">Privacybeleid</Link>
+              <Link href="/algemene-voorwaarden">Algemene voorwaarden</Link>
             </div>
           </div>
 
           {/* Contact */}
           <div className="footerCol">
             <h4 className="footerColTitle">Contact</h4>
-            <a
-              className="footerEmail"
-              href="mailto:contact@threatzero.nl"
-            >
+            <a className="footerEmail" href="mailto:contact@threatzero.nl">
               contact@threatzero.nl
             </a>
 
+            {/* Placeholder blijft ok zolang reCAPTCHA nog niet live is */}
             <div className="recapPlaceholder">reCAPTCHA</div>
           </div>
         </div>

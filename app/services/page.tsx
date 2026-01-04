@@ -1,5 +1,9 @@
+import type { ReactNode } from "react";
+
 import ServicesForm from "@/components/ServicesForm";
 import ScanCTA from "@/components/ScanCTA";
+
+import { Search, Zap, Shield, Network, Eye } from "lucide-react";
 
 type Service = {
   id: string;
@@ -7,50 +11,93 @@ type Service = {
   desc: string;
   cta: string;
   align: "left" | "right";
+  kicker: string;
+  icon: ReactNode;
 };
 
 const services: Service[] = [
   {
-    id: "pentest",
-    title: "Penetratietesten",
-    desc:
-      "Praktische tests om kwetsbaarheden en misconfiguraties te identificeren, inclusief prioritering en concrete verbeterpunten.",
-    cta: "Meer informatie",
-    align: "right",
-  },
-  {
     id: "risk",
     title: "Risicoanalyse",
     desc:
-      "Snel inzicht in je grootste risico’s, waar ze zich bevinden en welke acties de meeste impact hebben.",
+      "Krijg snel inzicht in je grootste risico’s en waar ze zich bevinden.\n" +
+      "We helpen je prioriteiten stellen, zodat je weet waar je vandaag moet beginnen.",
     cta: "Gratis intake aanvragen",
     align: "left",
+    kicker: "ZICHT KRIJGEN",
+    icon: <Search size={18} />,
   },
   {
-    id: "redteam",
-    title: "Red Teaming",
+    id: "pentest",
+    title: "Pentesten",
     desc:
-      "Realistische aanvalsscenario’s om detectie, respons en weerbaarheid te testen — veilig en gecontroleerd.",
+      "We testen je systemen en processen zoals echte aanvallers dat zouden doen.\n" +
+      "Dit combineren we met realistische aanvalsscenario’s, zodat je ziet waar je kwetsbaar bent én hoe groot de impact kan zijn.\n\n" +
+      "Je krijgt duidelijke inzichten en concrete verbeterpunten.",
     cta: "Meer informatie",
     align: "right",
+    kicker: "ONTDEK & VERBETER",
+    icon: <Zap size={18} />,
+  },
+  {
+    id: "ai",
+    title: "AI & Automatisering",
+    desc:
+      "Met AI en slimme automatisering houden we continu overzicht over risico’s en signalen.\n" +
+      "Zo worden problemen sneller herkend en kun je eerder ingrijpen — zonder extra handmatig werk.\n\n" +
+      "Ideaal voor organisaties die willen schalen zonder extra complexiteit.",
+    cta: "Meer informatie",
+    align: "left",
+    kicker: "BLIJF VERBETEREN",
+    icon: <Shield size={18} />,
+  },
+  {
+    id: "cloudflare",
+    title: "Cloudflare Security",
+    desc:
+      "We helpen je Cloudflare slim in te zetten voor betere beveiliging en prestaties.\n" +
+      "Denk aan bescherming tegen aanvallen, meer controle en een stabiele basis voor groei.",
+    cta: "Meer informatie",
+    align: "right",
+    kicker: "BESCHERMEN",
+    icon: <Network size={18} />,
   },
   {
     id: "osint",
     title: "OSINT-onderzoek",
     desc:
-      "Inzicht in je digitale voetafdruk: blootgestelde data, datalekken en signalen die door aanvallers kunnen worden misbruikt.",
-    cta: "Gratis intake aanvragen",
-    align: "left",
-  },
-  {
-    id: "removal",
-    title: "Gegevensverwijdering",
-    desc:
-      "Begeleiding bij het verminderen van onnodig openbare data en het verkleinen van je aanvalsvlak.",
+      "We brengen in kaart welke informatie over jouw organisatie openbaar zichtbaar is.\n" +
+      "Zo voorkom je dat aanvallers misbruik maken van data die onbedoeld beschikbaar is.",
     cta: "Meer informatie",
-    align: "right",
+    align: "left",
+    kicker: "ZICHT KRIJGEN",
+    icon: <Eye size={18} />,
   },
 ];
+
+function Paragraphs({ text }: { text: string }) {
+  const blocks = text.split("\n\n");
+  return (
+    <>
+      {blocks.map((b, i) => (
+        <span key={i}>
+          {b.split("\n").map((line, j) => (
+            <span key={j}>
+              {line}
+              {j < b.split("\n").length - 1 ? <br /> : null}
+            </span>
+          ))}
+          {i < blocks.length - 1 ? (
+            <>
+              <br />
+              <br />
+            </>
+          ) : null}
+        </span>
+      ))}
+    </>
+  );
+}
 
 export default function ServicesPage() {
   return (
@@ -58,7 +105,7 @@ export default function ServicesPage() {
       {/* Header / Intro */}
       <section className="section servicesHero">
         <div className="container servicesHeroInner">
-          <p className="eyebrow">DIENSTEN</p>
+          <p className="{`eyebrow kicker-${s.id}">DIENSTEN</p>
           <h1 className="pageTitle" style={{ textAlign: "center" }}>
             Onze cybersecuritydiensten
           </h1>
@@ -93,8 +140,8 @@ export default function ServicesPage() {
                       <span className="illusDot" />
                     </div>
                     <div className="illusBody">
-                      <div className="illusIcon" aria-hidden>
-                        🛡️
+                      <div className="illusIcon" aria-hidden="true">
+                        {s.icon}
                       </div>
                       <div className="illusLines">
                         <span />
@@ -106,10 +153,10 @@ export default function ServicesPage() {
                 </div>
 
                 <div className="serviceCopy">
-                  <p className="eyebrow">ONTDEK & VERBETER</p>
+                  <p className="eyebrow">{s.kicker}</p>
                   <h2 className="h2">{s.title}</h2>
                   <p className="lead" style={{ marginTop: 10 }}>
-                    {s.desc}
+                    <Paragraphs text={s.desc} />
                   </p>
 
                   {/* Scroll naar formulier */}
@@ -130,10 +177,7 @@ export default function ServicesPage() {
       <ServicesForm />
 
       {/* Scan CTA onderaan (optioneel) */}
-      <ScanCTA
-        title="Gratis web check (demo)"
-        subtitle="Snelle check — later koppel je dit aan echte scans."
-      />
+      <ScanCTA title="Gratis web check met snelle resultaten." subtitle="" />
     </>
   );
 }
